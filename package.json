@@ -1,0 +1,16 @@
+{
+  "name": "remoteflow-server",
+  "version": "1.0.0",
+  "description": "Production Signaling Hub for RemoteFlow",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "ws": "^8.21.0"
+  }
+}
