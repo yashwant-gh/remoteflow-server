@@ -26,11 +26,18 @@ wss.on('connection', (ws) => {
                 case 'answer':
                     const targetClient = clients.get(data.targetId);
                     if (targetClient && targetClient.readyState === WebSocket.OPEN) {
+                        console.log(`Routing signaling message [${data.type}] from ${currentId} to ${data.targetId}`);
                         targetClient.send(JSON.stringify({
                             type: data.type,
                             senderId: currentId,
                             payload: data.payload
                         }));
+                    } else {
+                        console.log(`Routing failed: Target device ${data.targetId} is offline.`);
+                        // Send an error payload receipt back to the original caller to clear their UI block
+                        if (ws.readyState === WebSocket.OPEN) {
+                            ws.send(JSON.stringify({ type: "error", message: "Target offline" }));
+                        }
                     }
                     break;
             }
